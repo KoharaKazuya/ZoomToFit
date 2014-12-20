@@ -8,8 +8,7 @@ isEnabledToScrollHorizontally = (id) ->
 chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
   switch request.command
     when 'CAN_SCROLL_HORIZONTALLY'
-      sendResponse
-        enabled: isEnabledToScrollHorizontally()
+      sendResponse enabled: isEnabledToScrollHorizontally()
 
 
 # 自動ズーム可能なら

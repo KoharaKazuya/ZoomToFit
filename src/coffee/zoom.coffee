@@ -67,7 +67,7 @@ option =
 chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
   switch request.command
     when 'ZOOM_TO_FIT'
-      id = if request.hasOwnProperty('tab_id')
+      id = if request.tab_id?
         request.tab_id
       else
         sender.tab.id
