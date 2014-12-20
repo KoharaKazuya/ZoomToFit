@@ -6,6 +6,7 @@
   "minimum_chrome_version": "40",
   "permissions": [
     "tabs",
+    "storage",
     "http://*/*",
     "https://*/*"
   ],
