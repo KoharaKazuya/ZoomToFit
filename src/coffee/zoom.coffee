@@ -1,7 +1,3 @@
-# メッセージを受け取りコマンドを実行する
-# 現在の倍率の周辺を探索する
-# 範囲内での最適解を二分探索で求める
-
 ###
 横スクロールが発生しない範囲での最大限ズームの倍率を求める
 
@@ -19,17 +15,12 @@ expandSearchToFit = (id, estimation, min, max, cb) ->
     else
       chrome.tabs.setZoom id, smax, ->
         chrome.tabs.sendMessage id,
-          command: "CAN_SCROLL_HORIZONTALLY"
+          command: 'CAN_SCROLL_HORIZONTALLY'
         , (response) ->
           if response.enabled
             cb smax
           else
             searchMax smax, step * 2, cb
-          return
-
-        return
-
-    return
   searchMin = (smin, step, cb) ->
     smin -= step
     if smin < min
@@ -37,7 +28,7 @@ expandSearchToFit = (id, estimation, min, max, cb) ->
     else
       chrome.tabs.setZoom id, smin, ->
         chrome.tabs.sendMessage id,
-          command: "CAN_SCROLL_HORIZONTALLY"
+          command: 'CAN_SCROLL_HORIZONTALLY'
         , (response) ->
           if response.enabled
             searchMin smin, step * 2, cb
@@ -62,7 +53,7 @@ binarySearchToFit = (id, min, max, cb) ->
     m = (min + max) / 2
     chrome.tabs.setZoom id, m, ->
       chrome.tabs.sendMessage id,
-        command: "CAN_SCROLL_HORIZONTALLY"
+        command: 'CAN_SCROLL_HORIZONTALLY'
       , (response) ->
         if response.enabled
           binarySearchToFit id, min, m, cb
@@ -72,17 +63,20 @@ option =
   zoom_min: 0.75
   zoom_max: 1.5
 
+# メッセージを受け取りコマンドを実行する
 chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
   switch request.command
-    when "ZOOM_TO_FIT"
-      id = if request.hasOwnProperty("tab_id")
+    when 'ZOOM_TO_FIT'
+      id = if request.hasOwnProperty('tab_id')
         request.tab_id
       else
         sender.tab.id
       chrome.tabs.getZoom id, (zoom) ->
+        # 現在の倍率の周辺を探索する
         expandSearchToFit id, zoom,
           option.zoom_min - 0.05,
           option.zoom_max + 0.05, (smin, smax) ->
+            # 範囲内での最適解を二分探索で求める
             binarySearchToFit id, smin, smax, (result) ->
               result = option.zoom_min  if result < option.zoom_min
               result = option.zoom_max  if result > option.zoom_max

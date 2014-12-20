@@ -11,7 +11,7 @@ isEnabledToScrollHorizontally = function(id) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch (request.command) {
-    case "CAN_SCROLL_HORIZONTALLY":
+    case 'CAN_SCROLL_HORIZONTALLY':
       return sendResponse({
         enabled: isEnabledToScrollHorizontally()
       });
@@ -19,5 +19,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.runtime.sendMessage({
-  command: "ZOOM_TO_FIT"
+  command: 'ZOOM_TO_FIT'
 });

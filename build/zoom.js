@@ -15,16 +15,16 @@ expandSearchToFit = function(id, estimation, min, max, cb) {
   searchMax = function(smax, step, cb) {
     smax += step;
     if (max < smax) {
-      cb(max);
+      return cb(max);
     } else {
-      chrome.tabs.setZoom(id, smax, function() {
-        chrome.tabs.sendMessage(id, {
-          command: "CAN_SCROLL_HORIZONTALLY"
+      return chrome.tabs.setZoom(id, smax, function() {
+        return chrome.tabs.sendMessage(id, {
+          command: 'CAN_SCROLL_HORIZONTALLY'
         }, function(response) {
           if (response.enabled) {
-            cb(smax);
+            return cb(smax);
           } else {
-            searchMax(smax, step * 2, cb);
+            return searchMax(smax, step * 2, cb);
           }
         });
       });
@@ -37,7 +37,7 @@ expandSearchToFit = function(id, estimation, min, max, cb) {
     } else {
       return chrome.tabs.setZoom(id, smin, function() {
         return chrome.tabs.sendMessage(id, {
-          command: "CAN_SCROLL_HORIZONTALLY"
+          command: 'CAN_SCROLL_HORIZONTALLY'
         }, function(response) {
           if (response.enabled) {
             return searchMin(smin, step * 2, cb);
@@ -73,7 +73,7 @@ binarySearchToFit = function(id, min, max, cb) {
     m = (min + max) / 2;
     return chrome.tabs.setZoom(id, m, function() {
       return chrome.tabs.sendMessage(id, {
-        command: "CAN_SCROLL_HORIZONTALLY"
+        command: 'CAN_SCROLL_HORIZONTALLY'
       }, function(response) {
         if (response.enabled) {
           return binarySearchToFit(id, min, m, cb);
@@ -93,8 +93,8 @@ option = {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   var id;
   switch (request.command) {
-    case "ZOOM_TO_FIT":
-      id = request.hasOwnProperty("tab_id") ? request.tab_id : sender.tab.id;
+    case 'ZOOM_TO_FIT':
+      id = request.hasOwnProperty('tab_id') ? request.tab_id : sender.tab.id;
       return chrome.tabs.getZoom(id, function(zoom) {
         return expandSearchToFit(id, zoom, option.zoom_min - 0.05, option.zoom_max + 0.05, function(smin, smax) {
           return binarySearchToFit(id, smin, smax, function(result) {
