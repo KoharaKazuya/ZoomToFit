@@ -10,3 +10,10 @@ document.addEventListener 'DOMContentLoaded', ->
       chrome.runtime.sendMessage
         command: 'ZOOM_TO_FIT'
         tab_id: tabs[0].id
+  document.querySelector '.reset_button'
+    .addEventListener 'click', ->
+      chrome.tabs.query
+        currentWindow: true
+        active: true
+      , (tabs) ->
+        chrome.tabs.setZoom tabs[0].id, 1
