@@ -1,12 +1,32 @@
 <!doctype html>
 <meta charset="UTF-8">
+<style>
+  body {
+    width: 240px;
+  }
+  p {
+    margin: auto;
+    width: 200px;
+    margin-top: 1em;
+  }
+  button {
+    width: 100%;
+    font-family: "游ゴシック", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    color: #333;
+  }
+  button.zoom_button {
+    font-size: 20px;
+  }
+</style>
 <script src="popup.js"></script>
 
-<button class="zoom_button">Zoom to Fit</button>
+<p>
+  <button class="zoom_button">Zoom to Fit</button>
+</p>
 
-<form>
+<p>
   <label><input type="checkbox" class="checkbox_for_blacklist">このサイトでは自動ズームを使用しない</label>
-</form>
+</p>
 
 <p>
   <button class="option_page_link">オプション</button>

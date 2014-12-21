@@ -27,6 +27,7 @@ gulp.task 'copy', ->
     './src/manifest.json'
     './src/image/**/*'
     './src/html/**/*'
+    './src/css/**/*'
   ]
     .pipe gulp.dest('./build/')
 
