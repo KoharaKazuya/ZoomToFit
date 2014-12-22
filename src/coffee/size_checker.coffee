@@ -2,8 +2,11 @@
 水平方向のスクロールが可能な状態か？
 ###
 isEnabledToScrollHorizontally = (id) ->
+  prev = document.body.scrollLeft
   document.body.scrollLeft = 100000
-  document.body.scrollLeft isnt 0
+  enabled = (document.body.scrollLeft isnt 0)
+  document.body.scrollLeft = prev
+  enabled
 
 chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
   switch request.command
