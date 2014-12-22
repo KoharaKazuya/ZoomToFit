@@ -59,9 +59,6 @@ binarySearchToFit = (id, min, max, cb) ->
           binarySearchToFit id, min, m, cb
         else
           binarySearchToFit id, m, max, cb
-option =
-  zoom_min: 0.75
-  zoom_max: 1.5
 
 # メッセージを受け取りコマンドを実行する
 chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
@@ -73,11 +70,17 @@ chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
         sender.tab.id
       chrome.tabs.getZoom id, (zoom) ->
         # 現在の倍率の周辺を探索する
-        expandSearchToFit id, zoom,
-          option.zoom_min - 0.05,
-          option.zoom_max + 0.05, (smin, smax) ->
-            # 範囲内での最適解を二分探索で求める
-            binarySearchToFit id, smin, smax, (result) ->
-              result = option.zoom_min  if result < option.zoom_min
-              result = option.zoom_max  if result > option.zoom_max
-              chrome.tabs.setZoom id, result
+        chrome.storage.local.get
+          minZoomRate: 80
+          maxZoomRate: 150
+        , (values) ->
+          min = values.minZoomRate / 100
+          max = values.maxZoomRate / 100
+          expandSearchToFit id, zoom,
+            min - 0.05,
+            max + 0.05, (smin, smax) ->
+              # 範囲内での最適解を二分探索で求める
+              binarySearchToFit id, smin, smax, (result) ->
+                result = min if result < min
+                result = max if result > max
+                chrome.tabs.setZoom id, result
