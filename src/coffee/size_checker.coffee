@@ -16,6 +16,5 @@ chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
 
 # 自動ズーム可能なら
 chrome.storage.local.get { autozoom: false }, (values) ->
-  console.log values
   if values.autozoom
     chrome.runtime.sendMessage command: 'ZOOM_TO_FIT'
