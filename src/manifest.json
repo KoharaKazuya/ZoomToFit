@@ -11,7 +11,7 @@
     "https://*/*"
   ],
   "icons": {
-    "48": "icon.png"
+    "128": "icon128.png"
   },
   "background": {
     "scripts": ["zoom.js"],
