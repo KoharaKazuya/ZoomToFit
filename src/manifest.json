@@ -24,5 +24,14 @@
     "matches": ["http://*/*", "https://*/*"],
     "js": ["size_checker.js"]
   }],
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "commands": {
+    "zoom_to_fit": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+0",
+        "mac": "Command+Shift+0"
+      },
+      "description": "Zoom to Fit"
+    }
+  }
 }
