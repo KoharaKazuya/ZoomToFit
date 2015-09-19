@@ -1,14 +1,17 @@
 <!doctype html>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="options.css">
 <script src="options.js"></script>
 
-<h1>Options</h1>
+<section class="options">
+  <h1>Options</h1>
 
-<form>
-  <label>最小ズーム倍率: <input type="number" name="min_zoom_rate">%</label><br>
-  <label>最大ズーム倍率: <input type="number" name="max_zoom_rate">%</label>
-</form>
+  <form>
+    <label class="option-item">最小ズーム倍率: <input class="percentage" type="number" name="min_zoom_rate">%</label>
+    <label class="option-item">最大ズーム倍率: <input class="percentage" type="number" name="max_zoom_rate">%</label>
+  </form>
 
-<form>
-  <label><input type="checkbox">自動ズーム機能を使用する</label>
-</form>
+  <form>
+    <label class="option-item"><input type="checkbox">自動ズーム機能を使用する</label>
+  </form>
+</section>
