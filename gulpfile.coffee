@@ -37,7 +37,7 @@ gulp.task 'lint', ->
     .pipe coffeelint()
     .pipe coffeelint.reporter()
 
-gulp.task 'dist', ['clean', 'compile'], ->
+gulp.task 'dist', ['compile'], ->
   gulp.src './build/**/*'
     .pipe zip('ZoomToFit.zip')
     .pipe gulp.dest('./dist/')
