@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Zoom to Fit",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "スクリーンのサイズに合わせてブラウザのズーム倍率を自動的に変更します。",
   "minimum_chrome_version": "42",
   "permissions": [
